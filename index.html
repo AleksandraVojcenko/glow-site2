@@ -324,16 +324,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 .filter(part => part) // Убираем пустые части
                 .join(' ');
             
-            // 3. Отправляем данные на ваш API в Vercel
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: fullName || formData.firstname, // Имя для Telegram
-                    email: formData.email,
-                    message: formData.message
-                })
-            });
+       // 3. Отправляем данные на наш API (который в том же проекте Vercel)
+const response = await fetch('/api/sendMessage', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        name: fullName || formData.firstname,
+        email: formData.email,
+        message: formData.message
+    })
+});
             
             // 4. Получаем и обрабатываем ответ от Vercel
             const result = await response.json();
@@ -370,4 +370,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </body>
+
 </html>
